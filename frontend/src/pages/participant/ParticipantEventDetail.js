@@ -14,6 +14,22 @@ const ParticipantEventDetail = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const fetchEventDetails = async () => {
+      try {
+        setLoading(true);
+        const [eventResponse, questsResponse] = await Promise.all([
+          getEvent(id),
+          getEventQuests(id)
+        ]);
+        setEvent(eventResponse.data);
+        setQuests(questsResponse.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
     fetchEventDetails();
   }, [id]);
 
