@@ -1,0 +1,54 @@
+.quest-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.quest-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: var(--spacing-md);
+  gap: var(--spacing-md);
+}
+
+.quest-card-header h3 {
+  font-size: 1.25rem;
+  color: var(--gray-900);
+  margin: 0;
+}
+
+.quest-description {
+  color: var(--gray-600);
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.quest-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--gray-200);
+}
+
+.quest-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  font-size: 0.875rem;
+  color: var(--gray-700);
+}
+
+.quest-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.quest-card-button {
+  width: 100%;
+  justify-content: center;
+}
