@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework import viewsets, filters
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .models import Skill
+from .serializers import SkillSerializer
 
-# Create your views here.
+class SkillViewSet(viewsets.ModelViewSet):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name', 'description']
+    ordering_fields = ['name', 'created_at']
+    ordering = ['name']
