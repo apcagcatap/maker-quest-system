@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react'; // Added useCallback
 import { useParams, Link } from 'react-router-dom';
 import { getQuest, startQuest } from '../../services/api';
 import Loading from '../../components/common/Loading';
@@ -12,28 +12,31 @@ const ParticipantQuestDetail = () => {
   const [error, setError] = useState(null);
   const [starting, setStarting] = useState(false);
 
-  useEffect(() => {
-    fetchQuest();
-  }, [id]);
-
-  const fetchQuest = async () => {
+  // 1. Wrap fetchQuest in useCallback so it's memoized
+  const fetchQuest = useCallback(async () => {
     try {
       setLoading(true);
       const response = await getQuest(id);
       setQuest(response.data);
+      setError(null); // Clear any previous errors on success
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]); // Only recreate fetchQuest if 'id' changes
+
+  // 2. Now 'fetchQuest' can safely be a dependency here
+  useEffect(() => {
+    fetchQuest();
+  }, [fetchQuest]);
 
   const handleStartQuest = async () => {
     try {
       setStarting(true);
       await startQuest(id);
       alert('Quest started! You can now complete tasks.');
-      // Refresh quest data
+      // 3. This call still works perfectly because fetchQuest is defined in component scope
       fetchQuest();
     } catch (err) {
       alert('Failed to start quest: ' + err.message);
